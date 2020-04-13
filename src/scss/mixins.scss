@@ -1,0 +1,55 @@
+// Mixins
+// Nesting Styles
+@mixin banner {
+    width: 100%;
+    position: relative;
+    img{
+        width: 100%;
+    }
+    .banner-content{
+        position: absolute;
+        top: 50px;
+        width: 100%;
+    }
+    span{
+        font-size: $bannerHeading;
+        display: block;
+        text-transform: uppercase;
+        font-weight: bold;
+        margin-top: 50px;
+        @include mQ(3000px, 1200px){
+            font-size: 48px;
+        }
+    }
+    span.title{
+        font-weight: normal;
+        margin-bottom: 30px;
+    }
+}
+
+@mixin grid($cols, $mgn) {
+    float: left;
+    margin-right: $mgn;
+    margin-bottom: $mgn;
+    width: ((100% - (($cols - 1 ) * $mgn)) / $cols );
+    &:nth-child(#{$cols}n){
+        margin-right: 0;
+    }
+}
+
+
+
+@mixin mQ($args...){  // $arg... : 表示參數列表 (可傳入多個參數)
+    // If Statements
+    @if length($args) == 1{ // 參數為一個
+      @media screen and (max-width: nth($args, 1)){ // nth($arg, 1) : 1 為第一個參數 ( position )
+        // The @Content Keyword
+        @content;
+      }
+    }
+    @if length($args) == 2{
+      @media screen and (max-width: nth($args, 1)) and (min-width: nth($args, 2)){
+        @content;
+      }
+    }
+  }
